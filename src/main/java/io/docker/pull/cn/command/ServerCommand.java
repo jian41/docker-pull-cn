@@ -8,8 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
@@ -29,11 +27,13 @@ public class ServerCommand implements CommandLineRunner {
 
         String targetImage = dockerService.pullAndPush(image);
 
-        writeOutputVariable("image", targetImage);
+        String msg = "镜像地址：" + targetImage + ",\n 可使用docker pull 命令直接拉取。\n docker pull "+ targetImage;
+
+        writeGithubActionOutputVariable("msg", targetImage);
     }
 
     // 核心方法：将变量写入 $GITHUB_OUTPUT 文件
-    private static void writeOutputVariable(String name, String value) {
+    private static void writeGithubActionOutputVariable(String name, String value) {
         // 1. 获取 $GITHUB_OUTPUT 环境变量的值（即文件路径）
         String githubOutputFilePath = System.getenv("GITHUB_OUTPUT");
 
