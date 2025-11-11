@@ -16,19 +16,21 @@ import org.springframework.util.Assert;
 @AllArgsConstructor
 public class DockerService {
 
-    @Resource
-    DockerClient dockerClientRemote;
+
 
     @Resource
-    DockerClient dockerClient;
+    DockerClient cli;
 
     @Resource
     SysProp sysProp;
 
 
-    public void pullRemoteAndChangeTag(String image) {
+    public void pullRemoteAndChangeTag(String image) throws InterruptedException {
         String targetImage = getChangedTargetImageName(image);
         log.info("转换镜像地址 {}", targetImage);
+
+      this.pull(targetImage);
+
         this.changeTag(targetImage, image);
     }
 
@@ -57,14 +59,14 @@ public class DockerService {
      */
     public void pull(String image) throws InterruptedException {
         log.info("开始拉取镜像: {}", image);
-        dockerClient.pullImageCmd(image).exec(getCallback()).awaitCompletion();
+        cli.pullImageCmd(image).exec(getCallback()).awaitCompletion();
 
     }
 
 
     public void push(String image) throws InterruptedException {
         log.info("开始推送镜像:{}",image);
-        dockerClientRemote.pushImageCmd(image).exec(getCallback()).awaitCompletion();
+        cli.pushImageCmd(image).exec(getCallback()).awaitCompletion();
     }
 
     private static <T extends ResponseItem> ResultCallback.Adapter<T> getCallback() {
@@ -78,7 +80,7 @@ public class DockerService {
                     log.info("进度 {}", progress);
                 } else if (status != null) {
                     log.info("状态 {}", status);
-                }else if(item.getErrorDetail() != null && item.getErrorDetail().getCode() != null) {
+                }else if(item.getErrorDetail() != null && item.getErrorDetail().getMessage() != null) {
                     log.info("错误 {}",item.getErrorDetail().getMessage());
                 }
                 super.onNext(item);
@@ -88,7 +90,7 @@ public class DockerService {
 
     public String getImageId(String image) {
         // 使用 inspectImageCmd 命令，传入完整的 REPO:TAG
-        InspectImageResponse inspectResponse = dockerClient.inspectImageCmd(image).exec();
+        InspectImageResponse inspectResponse = cli.inspectImageCmd(image).exec();
 
         // Image ID 存储在 ID 字段中
         String imageId = inspectResponse.getId();
@@ -104,7 +106,7 @@ public class DockerService {
 
         String[] arr = target.split(":");
 
-        dockerClient.tagImageCmd(imageId, arr[0], arr[1]).exec();
+        cli.tagImageCmd(imageId, arr[0], arr[1]).exec();
         log.info("修改结束");
     }
 
