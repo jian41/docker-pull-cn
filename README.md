@@ -1,6 +1,6 @@
 # docker-pull-cn
 使用Github Action将国外的Docker镜像转存到阿里云私有仓库，供国内服务器使用，免费易用
-- 支持DockerHub, gcr.io, k8s.io, ghcr.io等任意仓库<
+- 支持DockerHub, gcr.io, k8s.io, ghcr.io等任意仓库
 - 支持最大40GB的大型镜像
 - 使用阿里云的官方线路，速度快
   
