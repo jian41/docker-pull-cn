@@ -21,5 +21,5 @@ docker tag registry.cn-hangzhou.aliyuncs.com/jian41/images:python_3 python:3
 ## 步骤3 简化版
 执行如下命令
 ```shell
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull-cn  python:3
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull  python:3
 ```
