@@ -11,10 +11,8 @@ env:
   sys.registry.pwd: ${{ secrets.REGISTRY_PWD }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 on:
-  issue_comment:
-    # 仅在创建新的评论时触发工作流
-    types: [created]
-    # 您也可以添加 edited 和 deleted
+  issues:
+    types: [opened]
 
 
 
