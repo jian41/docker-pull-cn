@@ -24,9 +24,6 @@ jobs:
     # 确保权限，以便工作流可以修改评论
     permissions:
       issues: write
-
-    #if: contains(github.event.comment.body, 'pull')
-
     steps:
     - name: 检查标题是否包含冒号
       if: contains(github.event.issue.title, ':')
