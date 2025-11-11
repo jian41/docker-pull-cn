@@ -29,10 +29,7 @@ jobs:
 
     steps:
     - name: Reply and Mark as Running (Optional)
-      run: |
-        gh issue comment ${{ github.event.issue.number }} \
-          --body "🤖 任务已收到，正在执行中... (Comment ID: ${{ github.event.comment.id }})" \
-          --repo ${{ github.repository }}
+      run: gh issue comment ${{ github.event.issue.number }} --body "🤖 任务已收到，正在执行中..."--repo ${{ github.repository }}
 
     - uses: actions/checkout@v4
     - name: Set up JDK 17
@@ -51,20 +48,8 @@ jobs:
       # --- 步骤 3: 修改原始评论 (核心步骤) ---
     - name: Edit Original Comment with Status
       # 使用 GitHub CLI 来编辑触发工作流的原始评论
-      run: |
-        NEW_BODY="## ✅ 任务已完成 (Updated by Actions)
-        
-        您在 ${{ github.event.repository.full_name }} 的 Issue/PR #${{ github.event.issue.number }} 上发出的命令已被执行。
-        
-        **执行结果:**
-        ${{ steps.main_task.outputs.result_message }}
-        "
-        
-        gh api \
-          --method PATCH \
-          -H "Accept: application/vnd.github+json" \
-          -H "X-GitHub-Api-Version: 2022-11-28" \
-          /repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }} \
-          -f body="$NEW_BODY"
+      run: gh issue comment ${{ github.event.issue.number }} --body "✅ 任务已完成 (Updated by Actions)"--repo ${{ github.repository }}
+
+
 
 
