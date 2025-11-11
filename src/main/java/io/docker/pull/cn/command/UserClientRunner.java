@@ -18,7 +18,7 @@ public class UserClientRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (args.length != 2) {
+        if (args.length != 1) {
             return;
         }
 
