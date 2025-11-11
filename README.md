@@ -12,5 +12,5 @@ docker run --rm registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull-cn  <IMAGE_
 
 例如想下载 python:3 这个镜像
 ```shell
-docker run --rm registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull-cn  python:3
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull-cn  python:3
 ```
