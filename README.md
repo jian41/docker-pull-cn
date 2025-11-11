@@ -9,11 +9,13 @@
 <img width="1466" height="1070" alt="image" src="https://github.com/user-attachments/assets/b633b84d-0cd1-43e1-a4ea-698dc15134d2" />
 
 # 快速使用
-执行如下命令可下载python3就像到主机
+执行如下命令
 ```shell
 docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull  python:3
 ```
-如果出现镜像不存在的情况，需要
+其中python:3 可替换为实际镜像
+
+如果报错提示镜像不存，需要创建issue触发Github Action同步
 
 # 创建issue触发后使用
 
