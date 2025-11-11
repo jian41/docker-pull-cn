@@ -1,22 +1,15 @@
 package io.docker.pull.cn.docker;
 
-import cn.hutool.core.date.DateUtil;
-import cn.hutool.core.util.ArrayUtil;
 import com.github.dockerjava.api.DockerClient;
 import com.github.dockerjava.api.async.ResultCallback;
 import com.github.dockerjava.api.command.InspectImageResponse;
-import com.github.dockerjava.api.model.Image;
 import com.github.dockerjava.api.model.ResponseItem;
 import io.docker.pull.cn.config.SysProp;
 import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
-
-import java.util.Date;
-import java.util.List;
 
 @Slf4j
 @Component
@@ -39,7 +32,7 @@ public class DockerService {
         this.changeTag(targetImage, image);
     }
 
-    public void pullAndPush(String image) throws InterruptedException {
+    public String pullAndPush(String image) throws InterruptedException {
         this.pull(image);
         log.info("拉取镜像完成 ：{}", image);
 
@@ -49,6 +42,7 @@ public class DockerService {
 
         this.push(targetImage);
         log.info("推送完成");
+        return targetImage;
     }
 
     private String getChangedTargetImageName(String image) {

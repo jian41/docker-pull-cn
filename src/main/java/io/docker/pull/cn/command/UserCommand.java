@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class UserClientRunner implements CommandLineRunner {
+public class UserCommand implements CommandLineRunner {
 
     @Resource
     DockerService dockerService;
