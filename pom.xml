@@ -61,27 +61,8 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <includeSystemScope>true</includeSystemScope>
-                </configuration>
             </plugin>
-
         </plugins>
     </build>
 
-    <repositories>
-        <!-- 使用华为云的maven镜像，阿里云的测试,发布的jar包延迟了一周左右-->
-        <repository>
-            <id>huaweicloud</id>
-            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
-        </repository>
-
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>huaweicloud</id>
-            <url>https://mirrors.huaweicloud.com/repository/maven/</url>
-        </pluginRepository>
-    </pluginRepositories>
 </project>
