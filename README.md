@@ -4,7 +4,8 @@
 - 支持最大40GB的大型镜像
 - 使用阿里云的官方线路，速度快
   
-项目使用issue触发
+# 原理
+项目使用issue触发 GitHub Action，执行镜像同步任务
 
 <img width="1466" height="1070" alt="image" src="https://github.com/user-attachments/assets/b633b84d-0cd1-43e1-a4ea-698dc15134d2" />
 
