@@ -25,11 +25,15 @@ public class ServerCommand implements CommandLineRunner {
         String image = args[0];
         log.info("参数 {}", image);
 
-        String targetImage = dockerService.pullAndPush(image);
-
-        String msg = "镜像地址：" + targetImage + ",\n 可使用docker pull 命令直接拉取。\n docker pull "+ targetImage;
-
-        writeGithubActionOutputVariable("msg", targetImage);
+        try {
+            String targetImage = dockerService.pullAndPush(image);
+            String msg = "✅ 任务已完成！ 镜像地址：" + targetImage ;
+            writeGithubActionOutputVariable("msg", msg);
+        }catch (Exception e){
+            log.error("拉取或推送时错误",e);
+            String msg = "❌ 任务执行错误，请删除issue后重试"  ;
+            writeGithubActionOutputVariable("msg", msg);
+        }
     }
 
     // 核心方法：将变量写入 $GITHUB_OUTPUT 文件
