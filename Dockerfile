@@ -10,9 +10,8 @@ RUN mv target/app.jar /home/app.jar
 
 
 FROM amazoncorretto:17-jre-alpine
-ARG IMAGE_NAME
 WORKDIR /home
 COPY --from=java /home/ ./
 EXPOSE 80
 
-ENTRYPOINT ["java","-Duser.timezone=Asia/Shanghai","-jar","/home/app.jar", "${IMAGE_NAME}"]
+ENTRYPOINT ["java","-Duser.timezone=Asia/Shanghai","-jar","/home/app.jar"]
