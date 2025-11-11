@@ -27,7 +27,7 @@ jobs:
     permissions:
       issues: write
 
-    if: contains(github.event.comment.body, 'pull')
+    #if: contains(github.event.comment.body, 'pull')
 
     steps:
     - name: Reply and Mark as Running (Optional)
