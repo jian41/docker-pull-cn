@@ -24,17 +24,16 @@ public class DockerService {
     @Resource
     SysProp sysProp;
 
-    public String md5(String image){
+    public String md5(String image) {
         String s = SecureUtil.md5(image);
         return s;
     }
 
     public void pullAndPush(String image) throws InterruptedException {
         this.pull(image);
-        log.info("拉取镜像完成 ：{}",image);
+        log.info("拉取镜像完成 ：{}", image);
 
-        String repository = sysProp.getRegistry().getUrl() + "/" + sysProp.getTargetRepository();
-        String targetImage = repository + ":" + this.md5(image);
+        String targetImage = getChangedTargetImageName(image);
         this.changeTag(image, targetImage);
         log.info("修改为目标镜像: {}", targetImage);
 
@@ -42,12 +41,18 @@ public class DockerService {
         log.info("推送完成");
     }
 
+    private String getChangedTargetImageName(String image) {
+        String repository = sysProp.getRegistry().getUrl() + "/" + sysProp.getTargetRepository();
+        String targetImage = repository + ":" + image.replace("/", "_").replace(":", "_");
+        return targetImage;
+    }
+
 
     /**
      * @param image 如 nginx:latest
      */
     public void pull(String image) throws InterruptedException {
-       cli.pullImageCmd(image).exec(new PullImageResultCallback() {
+        cli.pullImageCmd(image).exec(new PullImageResultCallback() {
             @Override
             public void onNext(PullResponseItem item) {
                 // 打印拉取过程中的状态信息
@@ -64,7 +69,7 @@ public class DockerService {
     }
 
     public void push(String image) throws InterruptedException {
-        cli.pushImageCmd(image).exec(new ResultCallback.Adapter<>(){
+        cli.pushImageCmd(image).exec(new ResultCallback.Adapter<>() {
             @Override
             public void onNext(PushResponseItem item) {
 
@@ -79,7 +84,7 @@ public class DockerService {
         }).awaitCompletion();
     }
 
-    public String getImageId(String image){
+    public String getImageId(String image) {
         // 使用 inspectImageCmd 命令，传入完整的 REPO:TAG
         InspectImageResponse inspectResponse = cli.inspectImageCmd(image).exec();
 
@@ -88,13 +93,13 @@ public class DockerService {
         return imageId;
     }
 
-    public void changeTag(String image, String target){
+    public void changeTag(String image, String target) {
         String imageId = getImageId(image);
-        Assert.notNull(imageId,"获取imageId失败");
+        Assert.notNull(imageId, "获取imageId失败");
 
         String[] arr = target.split(":");
 
-        cli.tagImageCmd(imageId,arr[0],arr[1]).exec();
+        cli.tagImageCmd(imageId, arr[0], arr[1]).exec();
     }
 
 }
