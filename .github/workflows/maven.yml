@@ -28,7 +28,11 @@ jobs:
     #if: contains(github.event.comment.body, 'pull')
 
     steps:
-    - name: Reply and Mark as Running (Optional)
+    - name: 检查标题是否包含冒号
+      if: contains(github.event.issue.title, ':')
+      run:  echo "Issue 标题中包含冒号，继续执行后续步骤。"
+
+    - name: 回复issue开始
       run: gh issue comment ${{ github.event.issue.number }} --body "🤖 任务已收到，正在执行中..." --repo ${{ github.repository }}
 
     - uses: actions/checkout@v4
@@ -42,12 +46,12 @@ jobs:
       run: mvn  package -q  && mv target/app.jar ./
 
 
-    - name: Run jar
+    - name: 执行操作
       id: jar
       run: java -jar app.jar ${{ github.event.issue.title }} server
 
       # --- 步骤 3: 修改原始评论 (核心步骤) ---
-    - name: Edit Original Comment with Status
+    - name: 回复issue完成
       # 使用 GitHub CLI 来编辑触发工作流的原始评论
       run: gh issue comment ${{ github.event.issue.number }} --body "✅ 任务已完成, 目标镜像：${{ steps.jar.outputs.image }}" --repo ${{ github.repository }}
 
