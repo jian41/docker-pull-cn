@@ -12,7 +12,7 @@
 # 快速使用
 执行如下命令
 ```shell
-docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull  python:3
+docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzhou.aliyuncs.com/jiangood/docker-pull  python:3
 ```
 其中python:3 可替换为实际镜像
 
@@ -25,6 +25,6 @@ docker run --rm -v /var/run/docker.sock:/var/run/docker.sock registry.cn-hangzho
 ## 步骤2 
 等待任务执行，执行成功会自动回复到issue
   
-得到镜像地址：registry.cn-hangzhou.aliyuncs.com/jian41/images:python_3
+得到镜像地址：registry.cn-hangzhou.aliyuncs.com/jiangood/images:python_3
 
 

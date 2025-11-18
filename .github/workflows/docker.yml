@@ -26,6 +26,6 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: registry.cn-hangzhou.aliyuncs.com/jian41/docker-pull:latest
+          tags: registry.cn-hangzhou.aliyuncs.com/jiangood/docker-pull:latest
 
 
